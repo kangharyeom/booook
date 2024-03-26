@@ -1,9 +1,9 @@
 package com.example.bookbackend.book.domain;
 
-import com.example.bookbackend.common.domain.BaseTimeEntity;
-import com.example.bookbackend.member.domain.Member;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "BOOK")
-public class Book extends BaseTimeEntity {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookId;
@@ -22,15 +22,13 @@ public class Book extends BaseTimeEntity {
     private String endDate;
     private String summary;
     private String text;
-    private String imageUrl;
-    private boolean completedReading;
     private int totalPageCount;
     private int goalPageCount;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
-    private List<BookMarker> bookMarkerList = new ArrayList<>();
+//    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
+//    private List<BookMarker> bookMarkerList = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+//    @ManyToOne(cascade = CascadeType.DETACH)
+//    @JoinColumn(name = "MEMBER_ID")
+//    private Member member;
 }
