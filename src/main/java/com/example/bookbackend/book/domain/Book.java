@@ -25,8 +25,8 @@ public class Book {
     private int totalPageCount;
     private int goalPageCount;
 
-//    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
-//    private List<BookMarker> bookMarkerList = new ArrayList<>();
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
+    private List<BookMarker> bookMarkerList = new ArrayList<>();
 
 //    @ManyToOne(cascade = CascadeType.DETACH)
 //    @JoinColumn(name = "MEMBER_ID")
