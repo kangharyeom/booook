@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.asciidoctor.jvm.convert' version "3.3.2" // asciidoctor 플러그인
 }
 
 group = 'com.example'
@@ -15,6 +16,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt // 의존성으로 추가한 asciidoctor extension을 설정에 추가
 }
 
 repositories {
@@ -41,10 +43,47 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Rest Docs convert
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    // REST Docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// gradle 빌드 시 jar파일이 생성될 때 아래의 태스크를 실행해 문서 조각을 생성
+ext { // 전역 변수 선언, snippet : 문서 조각
+    snippetsDir = file('build/generated-snippets')
+}
+
+// 테스트가 끝난 결과물(문서 파일)을 snippetsDir에 넣음
+test {
+    outputs.dir snippetsDir
+}
+
+// gradle에서 dependsOn은 작업 순서라고 보기 - 정확히는 의존성이 있다. 즉, test 태스크가 수행된 다음 ascidoctor 태스크가 수행될 수 있다.
+asciidoctor {
+    inputs.dir snippetsDir // snipeetsDir에 생성된 문서 파일들을 가져옴
+    configurations 'asciidoctorExt'
+
+    sources { // 특정 파일만 html로 만든다.
+        include("**/index.adoc")
+    }
+    baseDirFollowsSourceFile() // 다른 adoc 파일을 include 할 때 경로를 baseDir로 맞춘다.
+
+    // dependsOn -> 작업 순서 test가 수행된 다음 asciidoctor가 수행
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}") {
+        into 'static/docs'
+    }
 }
