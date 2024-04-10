@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.asciidoctor.jvm.convert' version "3.3.2" // asciidoctor 플러그인
 }
 
 group = 'com.example'
@@ -15,6 +16,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt // 의존성으로 추가한 asciidoctor extension을 설정에 추가
 }
 
 repositories {
@@ -22,15 +24,31 @@ repositories {
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // persistence
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j' // 실사용
+    runtimeOnly 'com.h2database:h2' // 테스트용
+
+    // auth
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation "io.jsonwebtoken:jjwt:0.12.3"
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Rest Docs convert
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    // REST Docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -38,3 +56,43 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// gradle 빌드 시 jar파일이 생성될 때 아래의 태스크를 실행해 문서 조각을 생성
+ext { // 전역 변수 선언, snippet : 문서 조각
+    snippetsDir = file('build/generated-snippets')
+}
+
+// 테스트가 끝난 결과물(문서 파일)을 snippetsDir에 넣음
+test {
+    outputs.dir snippetsDir
+}
+
+// gradle에서 dependsOn은 작업 순서라고 보기 - 정확히는 의존성이 있다. 즉, test 태스크가 수행되어야 ascidoctor 태스크가 수행될 수 있다.
+asciidoctor {
+    inputs.dir snippetsDir // snipeetsDir에 생성된 문서 파일들을 가져옴
+    configurations 'asciidoctorExt'
+
+    sources { // 특정 파일만 html로 만든다.
+        include("**/index.adoc")
+    }
+
+    baseDirFollowsSourceFile() // 다른 adoc 파일을 include 할 때 경로를 baseDir로 맞춘다.
+
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}") {
+        into 'static/docs' // http://localhost:8080/docs/index.html 경로에서 문서를 확인할 수 있음
+    }
+}
+
+/**
+ * <설정 완료 이후>
+ *     1. 테스트 작성 후 테스트 실행
+ *     2. build.gradle test 태스크가 실행되며 지정 경로에 코드 스니펫(문서 조각)이 생성
+ *     3. src디렉토리 하위에 adoc파일을 생성 -> 현재 생성하지 않은 상태(2024.04.10)
+ *     4. adoc 파일에서 앞서 생성된 코드 스니펫을 활용해 문서 ㅈ가성
+ *     5. 이후 build를 다시하면 build/docs/asciidoc/index.html이란 파일이 생기고 해당 파일이 최종 결과물
+ */
