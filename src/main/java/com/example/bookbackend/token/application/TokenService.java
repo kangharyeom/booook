@@ -3,7 +3,6 @@ package com.example.bookbackend.token.application;
 import com.example.bookbackend.auth.web.dto.Tokens;
 import com.example.bookbackend.common.jwt.JwtManager;
 import com.example.bookbackend.member.domain.Role;
-import com.example.bookbackend.token.application.dto.TokenCreationInfo;
 import com.example.bookbackend.token.domain.RefreshToken;
 import com.example.bookbackend.token.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +19,7 @@ public class TokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public Tokens createTokens(TokenCreationInfo tokenCreationInfo) {
-        long memberId = tokenCreationInfo.getMemberId();
-        Role role = tokenCreationInfo.getRole();
-
+    public Tokens createTokens(long memberId, Role role) {
         Instant now = Instant.now();
         String accessToken = jwtManager.createAccessToken(memberId, role, now);
         String refreshToken = jwtManager.createRefreshToken(now);
