@@ -1,6 +1,5 @@
 package com.example.bookbackend.member.application;
 
-import com.example.bookbackend.common.util.ApiCode;
 import com.example.bookbackend.member.application.dto.SignUpInfo;
 import com.example.bookbackend.member.domain.Member;
 import com.example.bookbackend.member.exception.MemberException;
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static com.example.bookbackend.common.util.ApiCode.*;
 
@@ -31,12 +28,12 @@ public class MemberService {
 
     private void validateEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
-            throw new MemberException(API_1000);
+            throw new MemberException(API_2000);
         }
     }
 
     public Member findMemberBy(String email) {
         return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new MemberException("email :: " + email, API_1001));
+                .orElseThrow(() -> new MemberException("email :: " + email, API_2001));
     }
 }
