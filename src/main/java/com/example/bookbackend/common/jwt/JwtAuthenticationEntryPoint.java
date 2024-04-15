@@ -21,8 +21,9 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
         CommonResponse exceptionResponse = createExceptionMessage((Exception) request.getAttribute(EXCEPTION_KEY));
+
         setUpResponse(response, exceptionResponse, UNAUTHORIZED);
     }
 

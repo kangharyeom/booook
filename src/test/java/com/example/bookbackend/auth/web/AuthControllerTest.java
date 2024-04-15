@@ -5,7 +5,6 @@ import com.example.bookbackend.auth.application.dto.SignInInfo;
 import com.example.bookbackend.auth.web.dto.Tokens;
 import com.example.bookbackend.common.jwt.JwtAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
