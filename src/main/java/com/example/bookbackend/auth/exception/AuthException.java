@@ -1,7 +1,7 @@
 package com.example.bookbackend.auth.exception;
 
 import com.example.bookbackend.common.exception.GlobalException;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
 
 public class AuthException extends GlobalException {
 

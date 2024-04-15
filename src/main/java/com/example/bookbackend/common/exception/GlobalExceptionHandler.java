@@ -1,5 +1,6 @@
 package com.example.bookbackend.common.exception;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.CommonResponse;
+import com.example.bookbackend.common.response.ApiCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

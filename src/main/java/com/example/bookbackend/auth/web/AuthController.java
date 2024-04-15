@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.example.bookbackend.common.response.ResponseManager.*;
+import static com.example.bookbackend.common.util.ResponseManager.*;
 
 @RequiredArgsConstructor
 @RestController

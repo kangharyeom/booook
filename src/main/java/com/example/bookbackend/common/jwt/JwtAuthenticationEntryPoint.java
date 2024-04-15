@@ -1,8 +1,6 @@
 package com.example.bookbackend.common.jwt;
 
-import com.example.bookbackend.common.exception.CommonResponse;
-import com.example.bookbackend.common.response.ResponseManager;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.CommonResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -15,8 +13,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 import static com.example.bookbackend.common.jwt.JwtAuthenticationFilter.*;
-import static com.example.bookbackend.common.response.ResponseManager.*;
-import static com.example.bookbackend.common.util.ApiCode.*;
+import static com.example.bookbackend.common.util.ResponseManager.*;
+import static com.example.bookbackend.common.response.ApiCode.*;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Component

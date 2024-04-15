@@ -1,14 +1,14 @@
 package com.example.bookbackend.common.jwt;
 
-import com.example.bookbackend.common.exception.CommonResponse;
+import com.example.bookbackend.common.response.CommonResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import static com.example.bookbackend.common.response.ResponseManager.*;
-import static com.example.bookbackend.common.util.ApiCode.*;
+import static com.example.bookbackend.common.util.ResponseManager.*;
+import static com.example.bookbackend.common.response.ApiCode.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Component

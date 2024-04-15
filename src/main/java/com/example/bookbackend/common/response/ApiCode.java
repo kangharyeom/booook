@@ -1,4 +1,4 @@
-package com.example.bookbackend.common.util;
+package com.example.bookbackend.common.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

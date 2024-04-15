@@ -1,6 +1,5 @@
-package com.example.bookbackend.common.exception;
+package com.example.bookbackend.common.response;
 
-import com.example.bookbackend.common.util.ApiCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 

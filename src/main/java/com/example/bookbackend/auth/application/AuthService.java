@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.bookbackend.common.util.ApiCode.*;
+import static com.example.bookbackend.common.response.ApiCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
