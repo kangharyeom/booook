@@ -18,6 +18,7 @@ public enum ApiCode {
     API_1003("1003","토큰이 위조됐습니다.", UNAUTHORIZED),
     API_1004("1004","해당 토큰은 사용 불가한 토큰입니다.", UNAUTHORIZED),
     API_1005("1005","토큰의 형식이 잘못됐습니다.", UNAUTHORIZED),
+    API_1006("1006","비밀번호가 일치하지 않습니다.", BAD_REQUEST),
 
     // member
     API_2000("2000", "중복되는 이메일입니다.", BAD_REQUEST),
