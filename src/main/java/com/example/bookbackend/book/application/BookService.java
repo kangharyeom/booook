@@ -3,7 +3,7 @@ package com.example.bookbackend.book.application;
 import com.example.bookbackend.book.domain.Book;
 import com.example.bookbackend.book.domain.BookRepository;
 import com.example.bookbackend.common.exception.GlobalException;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
