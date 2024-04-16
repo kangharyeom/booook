@@ -1,4 +1,4 @@
-package com.example.bookbackend.common.exception;
+package com.example.bookbackend.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -20,5 +20,9 @@ public class CommonResponse<T> {
     public CommonResponse(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public static <T> CommonResponse<T> of(ApiCode code) {
+        return new CommonResponse<>(code.name(), code.getMsg());
     }
 }
