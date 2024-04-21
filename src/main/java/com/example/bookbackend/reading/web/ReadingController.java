@@ -38,7 +38,7 @@ public class ReadingController {
             log.error("result 검증 오류 : {} ", result.getFieldError().getDefaultMessage());
             return new CommonResponse(ApiCode.API_9999.getCode(), result.getFieldError().getDefaultMessage());
         }
-        //2. 로그인 세션 체크
+        //2. 로그인 세션 체크 (상의 필요)
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null) {
             return new CommonResponse(ApiCode.API_9999.getCode(), "로그인 해주세요.");
