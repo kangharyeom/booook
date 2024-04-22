@@ -2,7 +2,7 @@ package com.example.bookbackend.auth.web;
 
 import com.example.bookbackend.auth.application.AuthService;
 import com.example.bookbackend.auth.application.dto.SignInInfo;
-import com.example.bookbackend.auth.web.dto.Tokens;
+import com.example.bookbackend.token.web.dto.Tokens;
 import com.example.bookbackend.common.jwt.JwtAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
