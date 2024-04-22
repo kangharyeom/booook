@@ -35,7 +35,9 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(
-                                new AntPathRequestMatcher("/home")
+                                new AntPathRequestMatcher("/home"),
+                                new AntPathRequestMatcher("/member/sign-up"),
+                                new AntPathRequestMatcher("/auth/sign-in")
                         ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
