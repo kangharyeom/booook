@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ReadingRepository extends JpaRepository<Reading, Long> {
     Optional<List<Reading>> findByNickname(String nickName);
+
+    Optional<Reading> findByBookTitle(String bookTitle);
 }

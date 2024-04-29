@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -36,36 +37,58 @@ public class ReadingService {
     //총 읽은 책 개수 계산(진행률이 100%인 책)
     public int getAllBookCounting(String nickName) {
         //책 계산
-        List<ReadingResponseDto> getData = getReadingHistory(nickName);
-        for(ReadingResponseDto r: getData) {
+        int i = 0;
+        Optional<List<Book>> getData = bookRepository.findByMember_Name(nickName);
 
+        if(getData.isEmpty()) return i;
+
+        for(Book r: getData.get()) {
+            if(r.isCompletedReading()) i++;
         }
-
-        return 1;
+        return i;
     }
 
     //읽고 있는 책 개수 계산(진행률이 1% ~ 99%인 책)
-    public int getReadingBookCounting(ReadingRequestDto readingRequestDto) {
+    public int getReadingBookCounting(String nickName) {
         //1. 내가 읽은 책 조회
-        List<Reading> readings = readingRepository.findByNickname(readingRequestDto.getNickName())
-                .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
+        int i = 0;
+        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(nickName);
 
-        return 1;
+        //2. 책 페이지 조회
+        List<ReadingResponseDto> getReadingData = getReadingHistory(nickName);
+        if(getReadingData.isEmpty() || getBookData.isEmpty()) return i; // 아직 읽고 있는 책 없음
+
+        for(Book b: getBookData.get()) {
+            for(ReadingResponseDto r : getReadingData) {
+                if(b.getTitle().equals(r.getBookTitle())) {
+                    if(!b.isCompletedReading())
+                        if(r.getPageNo() != 0) i++;
+                }
+            }
+        }
+        return i;
     }
 
     //읽을 책 계산 (진행률이 0%인 책)
-    public int getReadBookCounting(ReadingRequestDto readingRequestDto) {
-        //1. 내가 읽은 책 조회
-        List<Reading> readings = readingRepository.findByNickname(readingRequestDto.getNickName())
-                .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
+    public int getReadBookCounting(String nickName) {
+        //1. 책 페이지 조회
+        int i = 0;
+        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(nickName);
+        if(getBookData.isEmpty()) return i;
 
-        return 1;
+        for(Book b : getBookData.get()) {
+            if(!b.isCompletedReading() && b.getTotalPageCount() == 0) {
+                i++;
+            }
+        }
+
+        return i;
     }
 
     //메인(종합 데이터)
     public ReadingResponseDto returnMainData(ReadingRequestDto readingRequestDto) {
         //책에 대한 정보 가져오기(파라미터 추가 해야됨.)
-        List<Book> books = bookRepository.findByNickname(readingRequestDto.getNickName())
+        List<Book> books = bookRepository.findByMember_Name(readingRequestDto.getNickName())
                 .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
 
         Reading reading = Reading.builder().build();
