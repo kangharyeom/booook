@@ -11,26 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReadingResponseDto {
-    private String bookTitle;
-    private String nickName;
-    private int pageNo;
-    private List<Book> books;
-    //상단
-    /*
-        총 읽은책 개수, 읽고 있는 책 개수, 읽을 책 개수
-     */
-    //하단 내가 읽은 책 (list)
-    /*
-        목표, 책 제목, 책 내용?, 읽은 페이지(%), 이미지, 완독여부
-     */
+    private int allBookCnt; //총 읽은책 개수
+    private int readingBookCnt; //읽고 있는 책 개수
+    private int readBookCnt; //읽을 책 개수
+    private List<Book> books; //목표, 책 제목, 책 내용?, 읽은 페이지(%), 이미지, 완독여부
 
-    //Entity -> dto
-
-    public static ReadingResponseDto toDto(Reading reading) {
+    //api 반환
+    public static ReadingResponseDto returnData(int allBookCnt, int readingBookCnt, int readBookCnt, List<Book> books) {
         return ReadingResponseDto.builder()
-                .bookTitle(reading.getBookTitle())
-                .nickName(reading.getNickName())
-                .pageNo(reading.getPageNo())
+                .allBookCnt(allBookCnt)
+                .readingBookCnt(readingBookCnt)
+                .readBookCnt(readBookCnt)
+                .books(books)
                 .build();
     }
 }
