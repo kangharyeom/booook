@@ -23,7 +23,6 @@ class ReadingServiceTest {
     @Autowired
     ReadingRepository readingRepository;
 
-    @DisplayName("해당 유저가 읽고있는 책이 몇권인지 가져온다.")
     @Test
     void getReadingHistory() {
 
@@ -34,12 +33,12 @@ class ReadingServiceTest {
     void getAllBookCounting() {
     }
 
-    @DisplayName("")
+    @DisplayName("해당 유저가 읽고있는 책이 몇권인지 가져온다.")
     @Test
     void getReadingBookCounting() {
     }
 
-    @DisplayName("")
+    @DisplayName("해당 유저가 읽기 시작한 책이 몇권인지 가져온다.")
     @Test
     void getReadBookCounting() {
     }

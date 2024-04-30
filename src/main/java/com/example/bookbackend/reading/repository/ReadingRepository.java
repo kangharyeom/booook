@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ReadingRepository extends JpaRepository<Reading, Long> {
-    Optional<List<Reading>> findByNickname(String nickName);
+    Optional<List<Reading>> findByName(String name);
 
     Optional<Reading> findByBookTitle(String bookTitle);
 }

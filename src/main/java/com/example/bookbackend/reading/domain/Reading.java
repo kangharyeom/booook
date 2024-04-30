@@ -17,7 +17,7 @@ public class Reading extends BaseTimeEntity {
 
     private String bookTitle; //책이름
 
-    private String nickName; //유저 닉네임
+    private String name; //유저 닉네임
 
     private int pageNo; //페이지 수
 }

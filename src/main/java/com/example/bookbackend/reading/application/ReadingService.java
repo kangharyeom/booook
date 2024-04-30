@@ -25,16 +25,16 @@ public class ReadingService {
     private final BookRepository bookRepository;
 
     //내가 읽은 책 목록 조회
-    public List<Reading> getReadingHistory(String nickName) {
-        return readingRepository.findByNickname(nickName)
+    public List<Reading> getReadingHistory(String name) {
+        return readingRepository.findByName(name)
                 .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
     }
 
     //총 읽은 책 개수 계산(진행률이 100%인 책)
-    public int getAllBookCounting(String nickName) {
+    public int getAllBookCounting(String name) {
         //책 계산
         int i = 0;
-        Optional<List<Book>> getData = bookRepository.findByMember_Name(nickName);
+        Optional<List<Book>> getData = bookRepository.findByMember_Name(name);
 
         if(getData.isEmpty()) return i;
 
@@ -45,13 +45,13 @@ public class ReadingService {
     }
 
     //읽고 있는 책 개수 계산(진행률이 1% ~ 99%인 책)
-    public int getReadingBookCounting(String nickName) {
+    public int getReadingBookCounting(String name) {
         //1. 내가 읽은 책 조회
         int i = 0;
-        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(nickName);
+        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(name);
 
         //2. 책 페이지 조회
-        List<Reading> getReadingData = getReadingHistory(nickName);
+        List<Reading> getReadingData = getReadingHistory(name);
         if(getReadingData.isEmpty() || getBookData.isEmpty()) return i; // 아직 읽고 있는 책 없음
 
         for(Book b: getBookData.get()) {
@@ -66,10 +66,10 @@ public class ReadingService {
     }
 
     //읽을 책 계산 (진행률이 0%인 책)
-    public int getReadBookCounting(String nickName) {
+    public int getReadBookCounting(String name) {
         //1. 책 페이지 조회
         int i = 0;
-        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(nickName);
+        Optional<List<Book>> getBookData = bookRepository.findByMember_Name(name);
         if(getBookData.isEmpty()) return i;
 
         for(Book b : getBookData.get()) {
@@ -84,15 +84,15 @@ public class ReadingService {
     //메인(종합 데이터)
     public ReadingResponseDto returnMainData(ReadingRequestDto readingRequestDto) {
         //1. 책에 대한 정보 가져오기
-        List<Book> bookInfo = bookRepository.findByMember_Name(readingRequestDto.getNickName())
+        List<Book> bookInfo = bookRepository.findByMember_Name(readingRequestDto.getName())
                 .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
 
         //2. 총 읽은 책 계산
-        int allBook = getAllBookCounting(readingRequestDto.getNickName());
+        int allBook = getAllBookCounting(readingRequestDto.getName());
         //3. 읽고 있는 책 갯수 계산
-        int readingBook = getReadingBookCounting(readingRequestDto.getNickName());
+        int readingBook = getReadingBookCounting(readingRequestDto.getName());
         //4. 읽을 책 계산
-        int readBook = getReadBookCounting(readingRequestDto.getNickName());
+        int readBook = getReadBookCounting(readingRequestDto.getName());
 
         return ReadingResponseDto.returnData(allBook, readingBook, readBook, bookInfo);
     }
