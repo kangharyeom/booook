@@ -1,6 +1,6 @@
 package com.example.bookbackend.common.exception;
 
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
 import lombok.Getter;
 
 @Getter
