@@ -1,7 +1,5 @@
 package com.example.bookbackend.reading.repository;
 
-import com.example.bookbackend.common.exception.GlobalException;
-import com.example.bookbackend.common.util.ApiCode;
 import com.example.bookbackend.reading.domain.Reading;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,45 +10,54 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.groups.Tuple.tuple;
 
 @ActiveProfiles("test")
 @DataJpaTest
 class ReadingRepositoryTest {
 
     @Autowired
-    ReadingRepository readingRepository;
+    private ReadingRepository readingRepository;
 
-    @DisplayName("특정 유저가 얼만큼 읽었는지 가져온다.")
+    @DisplayName("책을 읽기 시작하면 저장한다.")
     @Test
-    void findByName() {
+    void saveReading() {
         //given
-        Reading reading = Reading.builder()
-                .bookTitle("편의점 가는 기분")
-                .name("test")
-                .pageNo(20)
-                .build();
+        Reading reading = createReading("편의점 가는 기분", 40);
 
         //when
-        try {
-            readingRepository.save(reading);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("DB error : " + e.getMessage());
-        }
-
-        List<Reading> readings = readingRepository.findByName("test").
-                orElseThrow(() -> new GlobalException(ApiCode.API_9999));
+        Reading saveReading = readingRepository.save(reading);
 
         //then
-        assertNotNull(readings);
-
-        for(Reading r : readings) {
-            assertThat(r.getName()).isEqualTo("test");
-        }
+        assertThat(saveReading.getBookTitle()).isEqualTo("편의점 가는 기분");
     }
 
+    @DisplayName("test라는 사람이 읽은 책 목록을 가져온다.")
     @Test
-    void findByBookTitle() {
+    void findAllByNickname() {
+        //given
+        Reading reading1 = createReading("편의점 가는 기분", 20);
+        Reading reading2 = createReading("흥부와 놀부", 40);
+
+        //when
+        readingRepository.saveAll(List.of(reading1, reading2));
+
+        List<Reading> readings = readingRepository.findAllByName("test");
+
+        //then
+        assertThat(readings).hasSize(2)
+                .extracting("reading.bookTitle", "reading.nickName", "reading.pageNo")
+                .containsExactlyInAnyOrder(
+                        tuple("편의점 가는 기분", "test", 20),
+                        tuple("흥부와 놀부", "test", 40)
+                );
+    }
+
+    public static Reading createReading(String bookTitle, int pageNo) {
+        return Reading.builder()
+                .bookTitle(bookTitle)
+                .name("test")
+                .pageNo(pageNo)
+                .build();
     }
 }

@@ -9,9 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-
 @ActiveProfiles("test")
 @Transactional
 @SpringBootTest
@@ -23,6 +20,7 @@ class ReadingServiceTest {
     @Autowired
     ReadingRepository readingRepository;
 
+    @DisplayName("해당 유저가 읽고있는 책이 몇권인지 가져온다.")
     @Test
     void getReadingHistory() {
 
@@ -33,12 +31,12 @@ class ReadingServiceTest {
     void getAllBookCounting() {
     }
 
-    @DisplayName("해당 유저가 읽고있는 책이 몇권인지 가져온다.")
+    @DisplayName("")
     @Test
     void getReadingBookCounting() {
     }
 
-    @DisplayName("해당 유저가 읽기 시작한 책이 몇권인지 가져온다.")
+    @DisplayName("")
     @Test
     void getReadBookCounting() {
     }
