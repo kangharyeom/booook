@@ -1,7 +1,7 @@
 package com.example.bookbackend.reading.web;
 
-import com.example.bookbackend.common.exception.CommonResponse;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
+import com.example.bookbackend.common.response.CommonResponse;
 import com.example.bookbackend.reading.application.ReadingService;
 import com.example.bookbackend.reading.application.dto.ReadingRequestDto;
 import jakarta.validation.Valid;

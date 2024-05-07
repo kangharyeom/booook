@@ -34,13 +34,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(
-                                new AntPathRequestMatcher("/home"),
-                                new AntPathRequestMatcher("/v1/**"),
-                                new AntPathRequestMatcher("/member/sign-up"),
-                                new AntPathRequestMatcher("/auth/sign-in")
-                        ).permitAll()
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(authorize ->
+                                authorize.requestMatchers(
+                                        "/home",
+                                        "/v1/**",
+                                        "/member/sign-up",
+                                        "/auth/sign-in"
+                                ).permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler
                         .authenticationEntryPoint(entryPoint)
