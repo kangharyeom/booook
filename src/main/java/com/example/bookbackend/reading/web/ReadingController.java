@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -29,7 +26,7 @@ public class ReadingController {
     }
 
     //메인페이지 읽은 책 데이터 조회
-    @GetMapping("/getReadingData")
+    @PostMapping("/getReadingData")
     public CommonResponse getReadingData(@Valid @RequestBody ReadingRequestDto readingRequestDto, BindingResult result) {
         //1. 검증오류 체크
         if(result.hasErrors()) {
