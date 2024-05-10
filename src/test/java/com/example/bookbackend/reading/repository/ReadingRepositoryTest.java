@@ -46,7 +46,7 @@ class ReadingRepositoryTest {
 
         //then
         assertThat(readings).hasSize(2)
-                .extracting("name.bookTitle", "name.nickName", "name.pageNo")
+                .extracting("bookTitle", "name", "pageNo")
                 .containsExactlyInAnyOrder(
                         tuple("편의점 가는 기분", "test", 20),
                         tuple("흥부와 놀부", "test", 40)
