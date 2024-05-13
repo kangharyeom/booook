@@ -94,6 +94,9 @@ public class ReadingService {
         //4. 읽을 책 계산
         int readBook = getReadBookCounting(readingRequestDto.getName());
 
+        //5. 책에 대한 정보에서 진행률 % 계산
+        //TODO (이건 book브랜치와 병합전이라 지금 상태에서 백엔드에서 처리하기 복잡함.)
+
         return ReadingResponseDto.returnData(allBook, readingBook, readBook, bookInfo);
     }
 }

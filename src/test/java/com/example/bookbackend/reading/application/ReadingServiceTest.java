@@ -1,6 +1,7 @@
 package com.example.bookbackend.reading.application;
 
 import com.example.bookbackend.book.domain.Book;
+import com.example.bookbackend.reading.application.dto.ReadingRequestDto;
 import com.example.bookbackend.reading.repository.ReadingRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,30 +21,36 @@ class ReadingServiceTest {
     @Autowired
     ReadingRepository readingRepository;
 
-    @DisplayName("해당 유저가 읽고있는 책이 몇권인지 가져온다.")
+    @DisplayName("해당 유저가 읽은 책 기록을 가져온다.")
     @Test
     void getReadingHistory() {
-
+        readingService.getReadingHistory("test");
     }
 
     @DisplayName("해당 유저가 총 읽은 책이 몇권인지 가져온다.")
     @Test
     void getAllBookCounting() {
+        readingService.getAllBookCounting("test");
     }
 
-    @DisplayName("")
+    @DisplayName("해당 유저가 읽고 있는 책이 몇권인지 가져온다.")
     @Test
     void getReadingBookCounting() {
+        readingService.getReadingBookCounting("test");
     }
 
-    @DisplayName("")
+    @DisplayName("해당 유저가 다 읽은 책이 몇권인지 가져온다.")
     @Test
     void getReadBookCounting() {
+        readingService.getReadingBookCounting("test");
     }
 
-    @DisplayName("")
+    @DisplayName("모든 데이터 반환")
     @Test
     void returnMainData() {
+        ReadingRequestDto readingRequestDto = new ReadingRequestDto();
+        readingRequestDto.setName("test");
+        readingService.returnMainData(readingRequestDto);
     }
 
     private Book createTestData() {
