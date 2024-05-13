@@ -1,7 +1,6 @@
 package com.example.bookbackend.reading.application.dto;
 
 import com.example.bookbackend.book.domain.Book;
-import com.example.bookbackend.reading.domain.Reading;
 import lombok.*;
 
 import java.util.List;

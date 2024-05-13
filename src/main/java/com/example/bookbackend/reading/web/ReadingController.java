@@ -1,7 +1,7 @@
 package com.example.bookbackend.reading.web;
 
-import com.example.bookbackend.common.exception.CommonResponse;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
+import com.example.bookbackend.common.response.CommonResponse;
 import com.example.bookbackend.reading.application.ReadingService;
 import com.example.bookbackend.reading.application.dto.ReadingRequestDto;
 import jakarta.validation.Valid;
@@ -33,9 +33,13 @@ public class ReadingController {
             log.error("result 검증 오류 : {} ", result.getFieldError().getDefaultMessage());
             return new CommonResponse(ApiCode.API_9999.getCode(), result.getFieldError().getDefaultMessage());
         }
-        //2. 로그인 세션 체크 (상의 필요)
+        //2. 로그인 세션 체크
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null) {
+        log.info("auth : {} ", auth);
+        log.info("auth : {} ", auth.getDetails());
+        log.info("auth : {} ", auth.getCredentials());
+
+        if(auth == null || auth.getPrincipal().equals("anonymousUser")) {
             return new CommonResponse(ApiCode.API_9999.getCode(), "로그인 해주세요.");
         }
 

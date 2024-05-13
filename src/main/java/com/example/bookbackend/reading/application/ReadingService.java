@@ -3,7 +3,7 @@ package com.example.bookbackend.reading.application;
 import com.example.bookbackend.book.domain.Book;
 import com.example.bookbackend.book.domain.BookRepository;
 import com.example.bookbackend.common.exception.GlobalException;
-import com.example.bookbackend.common.util.ApiCode;
+import com.example.bookbackend.common.response.ApiCode;
 import com.example.bookbackend.reading.application.dto.ReadingRequestDto;
 import com.example.bookbackend.reading.application.dto.ReadingResponseDto;
 import com.example.bookbackend.reading.domain.Reading;

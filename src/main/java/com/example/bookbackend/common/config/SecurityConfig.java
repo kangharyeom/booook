@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(
                                 new AntPathRequestMatcher("/home"),
-                                new AntPathRequestMatcher("/v1/**")
+                                new AntPathRequestMatcher("/v1/**"),
                                 new AntPathRequestMatcher("/member/sign-up"),
                                 new AntPathRequestMatcher("/auth/sign-in")
                         ).permitAll()
