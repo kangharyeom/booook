@@ -1,6 +1,7 @@
 package com.example.bookbackend.book.domain;
 
 import com.example.bookbackend.common.domain.BaseTimeEntity;
+import com.example.bookbackend.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,11 +27,12 @@ public class Book extends BaseTimeEntity {
     private String imageUrl;
     private int totalPageCount;
     private int goalPageCount;
+    private boolean completedReading;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<BookMarker> bookMarkerList = new ArrayList<>();
 
-//    @ManyToOne(cascade = CascadeType.DETACH)
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }
