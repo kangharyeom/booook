@@ -26,15 +26,19 @@ public class ReadingService {
 
     //내가 읽은 책 목록 조회
     public List<Reading> getReadingHistory(String name) {
-        return readingRepository.findByName(name)
-                .orElseThrow(() -> new GlobalException(ApiCode.API_9999));
+        return readingRepository.findByName(name);
+    }
+
+    // 내가 읽은 책 정보 반환
+    public List<Book> getBookInfo(String name) {
+        return bookRepository.findByBookInfo(name);
     }
 
     //총 읽은 책 개수 계산(진행률이 100%인 책)
     public int getAllBookCounting(String name) {
         //책 계산
         int i = 0;
-        List<Book> getData = bookRepository.findByMember_Name(name);
+        List<Book> getData = getBookInfo(name);
 
         if(getData.isEmpty()) return i;
 
@@ -46,19 +50,26 @@ public class ReadingService {
 
     //읽고 있는 책 개수 계산(진행률이 1% ~ 99%인 책)
     public int getReadingBookCounting(String name) {
-        //1. 내가 읽은 책 조회
+        //1. 내가 읽은 책 정보 조회
         int i = 0;
-        List<Book> getBookData = bookRepository.findByMember_Name(name);
+        List<Book> getBookData = getBookInfo(name);
 
-        //2. 책 페이지 조회
+        //2. 내가 읽은 책 기록 조회
         List<Reading> getReadingData = getReadingHistory(name);
+        log.info("getBookData {} getReadingData {}", getBookData, getReadingData);
+
         if(getReadingData.isEmpty() || getBookData.isEmpty()) return i; // 아직 읽고 있는 책 없음
 
+        //3. 읽고 있는 책일 경우 i 값 증가
+        //순서 : 완독 여부 판단 -> 읽은 총 페이지가 0이 아니어야 함 -> 책 제목이랑 읽은 히스토리의 책 제목이 일치하면 카운팅
         for(Book b: getBookData) {
-            for(Reading r : getReadingData) {
-                if(b.getTitle().equals(r.getBookTitle())) {
-                    if(!b.isCompletedReading())
-                        if(r.getPageNo() != 0) i++;
+            if(!b.isCompletedReading()) {
+                if(b.getTotalPageCount() != 0) {
+                    for(Reading r : getReadingData) {
+                        if(b.getTitle().equals(r.getBookTitle())) {
+                            i++;
+                        }
+                    }
                 }
             }
         }
@@ -69,7 +80,7 @@ public class ReadingService {
     public int getReadBookCounting(String name) {
         //1. 책 페이지 조회
         int i = 0;
-        List<Book> getBookData = bookRepository.findByMember_Name(name);
+        List<Book> getBookData = getBookInfo(name);
         if(getBookData.isEmpty()) return i;
 
         for(Book b : getBookData) {
@@ -84,7 +95,7 @@ public class ReadingService {
     //메인(종합 데이터)
     public ReadingResponseDto returnMainData(ReadingRequestDto readingRequestDto) {
         //1. 책에 대한 정보 가져오기
-        List<Book> bookInfo = bookRepository.findByMember_Name(readingRequestDto.getName());
+        List<Book> bookInfo = getBookInfo(readingRequestDto.getName());
 
         //2. 총 읽은 책 계산
         int allBook = getAllBookCounting(readingRequestDto.getName());

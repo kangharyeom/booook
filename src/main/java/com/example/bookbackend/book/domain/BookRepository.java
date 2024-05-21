@@ -6,10 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    @Query("SELECT DISTINCT b FROM Book b LEFT JOIN FETCH b.member m WHERE m.name = :name")
-    List<Book> findByMember_Name(@Param("name") String name);
+    @Query("SELECT DISTINCT b FROM Book b where b.member = (select m from Member m where m.name = :name)")
+    List<Book> findByBookInfo(@Param("name") String name);
 }
