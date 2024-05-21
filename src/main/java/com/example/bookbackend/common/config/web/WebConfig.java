@@ -1,4 +1,4 @@
-package com.example.bookbackend.common.config;
+package com.example.bookbackend.common.config.web;
 
 import com.example.bookbackend.common.resolver.AuthenticatedUserResolver;
 import org.springframework.context.annotation.Configuration;
