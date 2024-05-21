@@ -1,4 +1,4 @@
-package com.example.bookbackend.common.config;
+package com.example.bookbackend.common.config.security;
 
 import com.example.bookbackend.common.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
