@@ -1,5 +1,6 @@
 package com.example.bookbackend.member.application;
 
+import com.example.bookbackend.member.application.dto.MemberInfo;
 import com.example.bookbackend.member.application.dto.SignUpInfo;
 import com.example.bookbackend.member.domain.Member;
 import com.example.bookbackend.member.exception.MemberException;
@@ -35,5 +36,12 @@ public class MemberService {
     public Member findMemberBy(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberException("email :: " + email, API_2001));
+    }
+
+    public MemberInfo findMemberBy(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException("memberId :: " + memberId, API_2001));
+
+        return MemberInfo.of(member);
     }
 }
