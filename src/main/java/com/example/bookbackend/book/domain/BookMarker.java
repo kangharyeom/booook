@@ -1,6 +1,7 @@
 package com.example.bookbackend.book.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,13 @@ public class BookMarker {
     private long bookMarkerId;
     private String date;
     private String text;
+
+    @Builder
+    public BookMarker(long bookMarkerId, String date, String text) {
+        this.bookMarkerId = bookMarkerId;
+        this.date = date;
+        this.text = text;
+    }
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "BOOK_ID")

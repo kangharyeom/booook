@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/book/marker")
+@RequestMapping("/api/book/markers")
 @Log4j2
 public class BookMarkerController {
     private final BookMarkerService bookMarkerService;
