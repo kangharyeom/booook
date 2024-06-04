@@ -46,6 +46,8 @@ public class AuthService {
     }
 
     public Tokens signInSocial(SocialMemberInfo socialMemberInfo) {
+        memberService.saveSocialMember(socialMemberInfo.getEmail(), socialMemberInfo.getName(), socialMemberInfo.getTel());
+
         return tokenService.createTokens(1L, Role.ROLE_USER);
     }
 }
