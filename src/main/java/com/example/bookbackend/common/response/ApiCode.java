@@ -27,6 +27,9 @@ public enum ApiCode {
     // token
     API_3000("3000", "일치하는 리프레쉬 토큰이 없습니다.", BAD_REQUEST),
 
+    // book
+    API_4000("4000","등록되지 않은 책입니다.", NOT_FOUND),
+
     // input validation
     API_9000("9000", "잘못된 입력 값이 존재합니다.", BAD_REQUEST),
     API_9001("9001", "입력 값을 파싱할 수 없습니다.", BAD_REQUEST),
