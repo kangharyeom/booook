@@ -2,8 +2,10 @@ package com.example.bookbackend.auth.web;
 
 import com.example.bookbackend.auth.application.AuthService;
 import com.example.bookbackend.auth.application.dto.SignInInfo;
+import com.example.bookbackend.auth.application.dto.SocialMemberInfo;
 import com.example.bookbackend.token.web.dto.Tokens;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,5 +26,10 @@ public class AuthController {
         Tokens tokens = authService.signIn(signInInfo);
 
         setUpTokensToCookie(tokens, response);
+    }
+
+    @PostMapping("/sign-in/social")
+    public Tokens signInSocial(@RequestBody @Valid SocialMemberInfo socialMemberInfo) {
+        return authService.signInSocial(socialMemberInfo);
     }
 }

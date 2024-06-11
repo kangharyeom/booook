@@ -44,4 +44,18 @@ public class MemberService {
 
         return MemberInfo.of(member);
     }
+
+    public void saveSocialMember(String email, String name, String tel) {
+        if (memberRepository.existsByEmail(email)) {
+            return;
+        }
+
+        Member member = Member.builder()
+            .email(email)
+            .name(name)
+            .tel(tel)
+            .build();
+
+        memberRepository.save(member);
+    }
 }

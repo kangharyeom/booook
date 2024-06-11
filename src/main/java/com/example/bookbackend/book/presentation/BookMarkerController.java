@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/book/markers")
 @Log4j2
 public class BookMarkerController {
     private final BookMarkerService bookMarkerService;
@@ -23,7 +24,7 @@ public class BookMarkerController {
     /*
      * 책갈피 등록
      */
-    @PostMapping("/api/{bookId}/markers")
+    @PostMapping
     public ResponseEntity<BookMarkerResponseDto> postBookMarker(@Validated @RequestBody BookMarkerPostDto requestBody) {
         BookMarkerResponseDto bookMarkerResponseDto;
 
@@ -40,7 +41,7 @@ public class BookMarkerController {
     /*
      * 책갈피 수정
      */
-    @PatchMapping("/api/{bookId}/markers/{bookMarkerId}")
+    @PatchMapping("/{bookMarkerId}")
     public ResponseEntity<BookMarkerResponseDto> patchBookMarker(@Validated @RequestBody BookMarkerPostDto requestBody, @PathVariable long bookMarkerId) {
         BookMarkerResponseDto bookMarkerResponseDto;
 
@@ -54,7 +55,7 @@ public class BookMarkerController {
     /*
      * 책갈피 단건 조회
      */
-    @GetMapping("/api/{bookId}/markers/{bookMarkerId}")
+    @GetMapping("/{bookMarkerId}")
     public ResponseEntity<BookMarkerResponseDto> getBookMarker(@PathVariable long bookMarkerId) {
         BookMarkerResponseDto bookMarkerResponseDto;
 
@@ -67,7 +68,7 @@ public class BookMarkerController {
     /*
      * 책갈피 전체 조회
      */
-    @GetMapping("/api/{bookId}/markers")
+    @GetMapping
     public ResponseEntity<List<BookMarkerResponseDto>> getBooks() {
         List<BookMarkerResponseDto> bookMarkerResponseDtoList;
 
@@ -79,7 +80,7 @@ public class BookMarkerController {
     /*
      * 책갈피 ID 단위 삭제
      */
-    @DeleteMapping("/api/{bookId}/markers/{bookMarkerId}")
+    @DeleteMapping("/{bookMarkerId}")
     public ResponseEntity<BookMarkerResponseDto> getBookMarkers(@PathVariable long bookMarkerId) {
 
         bookMarkerService.deleteBookMarker(bookMarkerId);
