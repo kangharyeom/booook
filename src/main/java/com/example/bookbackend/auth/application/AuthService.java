@@ -1,7 +1,9 @@
 package com.example.bookbackend.auth.application;
 
 import com.example.bookbackend.auth.application.dto.SignInInfo;
+import com.example.bookbackend.auth.application.dto.SocialMemberInfo;
 import com.example.bookbackend.auth.exception.AuthException;
+import com.example.bookbackend.member.domain.Role;
 import com.example.bookbackend.token.web.dto.Tokens;
 import com.example.bookbackend.member.application.MemberService;
 import com.example.bookbackend.member.domain.Member;
@@ -41,5 +43,11 @@ public class AuthService {
 
     private boolean isNotMatch(String requestPassword, String storedPassword) {
         return !passwordEncoder.matches(requestPassword, storedPassword);
+    }
+
+    public Tokens signInSocial(SocialMemberInfo socialMemberInfo) {
+        memberService.saveSocialMember(socialMemberInfo.getEmail(), socialMemberInfo.getName(), socialMemberInfo.getTel());
+
+        return tokenService.createTokens(1L, Role.ROLE_USER);
     }
 }
