@@ -25,6 +25,7 @@ public class BookMarkerController {
      */
     @PostMapping("/api/book/{bookId}/markers")
     public ResponseEntity<BookMarkerResponseDto> postBookMarker(@Validated @RequestBody BookMarkerPostDto requestBody, @PathVariable long bookId) {
+
         BookMarkerResponseDto bookMarkerResponseDto;
 
         BookMarker bookMarker = bookMarkerMapper.bookMarkerPostDtoToBookMarker(requestBody);
