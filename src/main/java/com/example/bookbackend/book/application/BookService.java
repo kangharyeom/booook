@@ -2,8 +2,10 @@ package com.example.bookbackend.book.application;
 
 import com.example.bookbackend.book.domain.Book;
 import com.example.bookbackend.book.domain.BookRepository;
-import com.example.bookbackend.common.exception.GlobalException;
+import com.example.bookbackend.book.exception.BookException;
 import com.example.bookbackend.common.response.ApiCode;
+import com.example.bookbackend.member.domain.Member;
+import com.example.bookbackend.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
-    public Book postBook(Book book) {
+    private final MemberRepository memberRepository;
+
+    public Book postBook(Book book, long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(() -> new BookException("member::"+memberId, ApiCode.API_2000));
+        book.setMember(member);
         bookRepository.save(book);
         return book;
     }
@@ -48,8 +55,7 @@ public class BookService {
     }
 
     public Book getBook(long bookId) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        Book book = optionalBook.orElseThrow(() -> new GlobalException(ApiCode.API_0000));
+        Book book = verifiedBook(bookId);
         return book;
     }
 
@@ -62,4 +68,11 @@ public class BookService {
         bookRepository.deleteById(bookId);
     }
 
+    public Book verifiedBook(long bookId) {
+        Optional<Book> optionalBookMarker = bookRepository.findById(bookId);
+        Book findBook =
+                optionalBookMarker.orElseThrow(() ->
+                        new BookException(ApiCode.API_4000));
+        return findBook;
+    }
 }

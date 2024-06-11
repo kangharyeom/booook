@@ -29,7 +29,7 @@ public class BookController {
     public ResponseEntity<BookResponseDto> postBook(@Validated @RequestBody BookPostDto requestBody) {
         BookResponseDto bookResponseDto;
 
-        Book book = bookService.postBook(bookMapper.BookPostDtoToBook(requestBody));
+        Book book = bookService.postBook(bookMapper.BookPostDtoToBook(requestBody), requestBody.getUserId());
         bookResponseDto = bookMapper.bookToBookResponseDto(book);
 
         return ResponseEntity.ok(bookResponseDto);
