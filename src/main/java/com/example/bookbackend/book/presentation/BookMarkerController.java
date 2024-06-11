@@ -24,14 +24,14 @@ public class BookMarkerController {
      * 책갈피 등록
      */
     @PostMapping("/api/book/{bookId}/markers")
-    public ResponseEntity<BookMarkerResponseDto> postBookMarker(@Validated @RequestBody BookMarkerPostDto requestBody) {
+    public ResponseEntity<BookMarkerResponseDto> postBookMarker(@Validated @RequestBody BookMarkerPostDto requestBody, @PathVariable long bookId) {
         BookMarkerResponseDto bookMarkerResponseDto;
 
         BookMarker bookMarker = bookMarkerMapper.bookMarkerPostDtoToBookMarker(requestBody);
 
         log.info(bookMarker.toString());
-        log.info(bookMarker.getBook().getBookId());
-        bookMarker = bookMarkerService.postBookMarker(bookMarker);
+        log.info(bookId);
+        bookMarker = bookMarkerService.postBookMarker(bookMarker, bookId, requestBody.getMemberId());
         bookMarkerResponseDto = bookMarkerMapper.bookMarkerToBookMarkerResponseDto(bookMarker);
 
         return ResponseEntity.ok(bookMarkerResponseDto);

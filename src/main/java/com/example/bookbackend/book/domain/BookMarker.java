@@ -1,5 +1,6 @@
 package com.example.bookbackend.book.domain;
 
+import com.example.bookbackend.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +30,7 @@ public class BookMarker {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }
