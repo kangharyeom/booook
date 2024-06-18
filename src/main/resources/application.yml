@@ -21,7 +21,7 @@ spring:
 
 #JWT
 secret-key: ${SECRET_KEY}
-access-expiration-hours: 1800 # 1시간
+access-expiration-hours: 3600 # 1시간
 refresh-expiration-hours: 86400 # 1일
 issuer: dadok
 
