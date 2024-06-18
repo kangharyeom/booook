@@ -38,6 +38,7 @@ public class ReadingController {
         log.info("auth : {} ", auth);
         log.info("auth : {} ", auth.getDetails());
         log.info("auth : {} ", auth.getCredentials());
+        log.info("test");
 
         if(auth == null || auth.getPrincipal().equals("anonymousUser")) {
             return new CommonResponse(ApiCode.API_9999.getCode(), "로그인 해주세요.");
