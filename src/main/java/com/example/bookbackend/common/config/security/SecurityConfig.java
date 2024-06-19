@@ -40,7 +40,10 @@ public class SecurityConfig {
                                         "/v1/**",
                                         "/member/sign-up",
                                         "/auth/sign-in",
-                                        "auth/sign-in/social"
+                                        "auth/sign-in/social",
+                                        "/v3/api-docs/**",
+                                        "/api-docs",
+                                        "/swagger-ui/**"
                                 ).permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler
