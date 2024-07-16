@@ -5,6 +5,7 @@ import com.example.bookbackend.book.domain.Book;
 import com.example.bookbackend.book.domain.BookMapper;
 import com.example.bookbackend.book.dto.BookPostDto;
 import com.example.bookbackend.book.dto.BookResponseDto;
+import com.example.bookbackend.common.resolver.AuthenticatedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,10 @@ public class BookController {
      * 책 등록
      */
     @PostMapping
-    public ResponseEntity<BookResponseDto> postBook(@Validated @RequestBody BookPostDto requestBody) {
+    public ResponseEntity<BookResponseDto> postBook(@Validated @RequestBody BookPostDto requestBody, @AuthenticatedUser Long userId) {
         BookResponseDto bookResponseDto;
 
-        Book book = bookService.postBook(bookMapper.BookPostDtoToBook(requestBody), requestBody.getUserId());
+        Book book = bookService.postBook(bookMapper.BookPostDtoToBook(requestBody), userId);
         bookResponseDto = bookMapper.bookToBookResponseDto(book);
 
         return ResponseEntity.ok(bookResponseDto);
