@@ -17,11 +17,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
+    show-sql: false
+
+springdoc:
+  swagger-ui:
+    path: /api-docs  # swagger-ui 접근 경로에 대한 별칭, 해당 주소로 접속해도 http://localhost:8080/swagger-ui/index.html로 리다이렉션 됨.
+    groups-order: DESC # path, query, body, response 순으로 출력
+    tags-sorter: alpha # 태그를 알파벳 순으로 정렬
+  paths-to-match:
+    - /** # swagger-ui에 표시할 api의 엔드포인트 패턴
 
 #JWT
 secret-key: ${SECRET_KEY}
-access-expiration-hours: 1800 # 1시간
+access-expiration-hours: 3600 # 1시간
 refresh-expiration-hours: 86400 # 1일
 issuer: dadok
 

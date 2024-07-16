@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookPostDto {
-    private long userId;
     private String title;
     private String startDate;
     private String endDate;
